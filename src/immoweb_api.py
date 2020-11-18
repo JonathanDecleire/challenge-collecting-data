@@ -32,6 +32,13 @@ class ImmowebAPI():
             properties_list.append(a)
         driver.close()
         return properties_list
-    
-    def get_properties_detail(self):
+
+    def get_properties_detail(self, annonce_url: str):
+        '''
+        This function will return the detail of a property found in
+        an 'immoweb annonce' page
+
+        :param annonce_url : url to call
+        :return : an object that represent the detail
+        '''
         pass
