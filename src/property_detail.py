@@ -1,4 +1,4 @@
-class Property_Object():
+class PropertyDetail():
     def __init__(self,
                  locality: str,
                  type_of_property: str,
