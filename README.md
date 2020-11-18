@@ -1,7 +1,7 @@
 # challenge-collecting-data
 Challenge collinting data @BeCode
-##What
-##Why
-##When
-##How
-##Who
+## What
+## Why
+## When
+## How
+## Who
