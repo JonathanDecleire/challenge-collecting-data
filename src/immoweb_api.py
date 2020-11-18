@@ -57,6 +57,6 @@ class ImmowebAPI():
         my_dict = demjson.decode(js_dict)
 
         # print(my_dict)
-        print((my_dict['classified'])['id']) # 9034494
- type(my_dict[0]['classified']['id'])
+        print(my_dict[0]['classified']['id'])  # 9034494
+ 
         driver.close()
