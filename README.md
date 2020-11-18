@@ -39,6 +39,7 @@ We have to scrap any belgian real estate agency website for information. The dat
 3 days to complete (18/11/2020 -- 22/11/2020)
 
 ## Team members
+
 Lise Amen
 Tina Folkers
 Jérôme Coumont
