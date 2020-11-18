@@ -3,7 +3,7 @@
 ## Purpose
 Create a program in python using web scraping and python libraries to create a dataset of Belgian real estate listings
 
-##Objectives
+## Objectives
 - Be able to scrape a website
 - Be able to build a dataset from scratch
 - Be able to implement a strategy to collect as much data as possible
