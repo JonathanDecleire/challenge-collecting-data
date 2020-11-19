@@ -64,9 +64,9 @@ class ImmowebAPI():
             print('[i] Information retrieved from ' + annonce_url)
             return self.get_property_detail(my_property_dict)
         except Exception as e:
-            print(f'[!] Information not retrieved from {annonce_url}\nError message : {e}')
+            print(f'[!] Information not retrieved from {annonce_url}')
+            print(f'\nError : {type(e)}\nError message : {e}')
             return None
-
 
     def get_property_detail(self, dictionary: Dict) -> PropertyDetail:
         '''
