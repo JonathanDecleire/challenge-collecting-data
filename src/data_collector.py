@@ -1,12 +1,14 @@
 from threading import Thread, RLock
+from time import sleep
 
 from src.immoweb_api import ImmowebAPI
 from src.property_detail import PropertyDetail
 
 
 class DataCollector():
-    def __init__(self, page_limit: int = None):
+    def __init__(self, page_limit: int = None, max_threads: int=5):
         self.page_limit = page_limit
+        self.max_threads = max_threads
 
     def start(self):
         my_immoweb_api = ImmowebAPI()
@@ -16,18 +18,20 @@ class DataCollector():
 
         # Loop while found links to scrap
         # and page limit not reached
+        active_threads = []
         while len(list_url) > 0:
-            threads = []
             # Scrap each url retrieved
             for annonce_url in list_url:
-                # Launch thread
+                # Max Threads limitation - wait
+                while len(active_threads) >= self.max_threads:
+                    for x in active_threads:
+                        if not x.is_alive():
+                            active_threads.remove(x)
+                # Launch a new thread
                 collector_thread = DataCollectorThread(annonce_url)
                 collector_thread.start()
-                threads.append(collector_thread)
-
-            # Wait the end of all Threads before attack the new page
-            for x in threads:
-                x.join()
+                active_threads.append(collector_thread)
+                sleep(1)  # To sequence the multithreading
 
             # Load next page
             if self.page_limit is None or page_num < self.page_limit:
@@ -35,6 +39,10 @@ class DataCollector():
                 list_url = my_immoweb_api.get_properties_list(page_num)
             else:
                 break  # Kill the loop if limit reached
+
+        # Wait the end of all active Threads
+        for x in active_threads:
+            x.join()
 
 
 lock_database = RLock()
