@@ -4,7 +4,7 @@ import demjson
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from typing import List
+from typing import Dict, List
 
 from src.property_detail import PropertyDetail
 
@@ -24,10 +24,15 @@ class ImmowebAPI():
         '''
         properties_list = []
         driver = webdriver.Firefox()
-        driver.get(self.base_search_url.format(page_num))
-        soup = BeautifulSoup(driver.page_source, 'lxml')
-        for a in soup.find_all('a', attrs={"class": "card__title-link"}):
-            properties_list.append(a['href'])
+        try:
+            driver.get(self.base_search_url.format(page_num))
+            soup = BeautifulSoup(driver.page_source, 'lxml')
+            for a in soup.find_all('a', attrs={"class": "card__title-link"}):
+                properties_list.append(a['href'])
+        except Exception:
+            # The page scrapping encoured a problem
+            # Problem of URL or page index over maximum
+            pass
         driver.close()
         return properties_list
 
@@ -40,26 +45,30 @@ class ImmowebAPI():
         :return : an object that represent the detail
         '''
         print('[i] get info from ' + annonce_url)
-        driver = webdriver.Firefox()
-        driver.get(annonce_url)
-        soup = BeautifulSoup(driver.page_source, 'lxml')
-        driver.close()
+        try:
+            driver = webdriver.Firefox()
+            driver.get(annonce_url)
+            soup = BeautifulSoup(driver.page_source, 'lxml')
+            driver.close()
 
-        script = soup.find_all('script')[1].contents[0]
+            script = soup.find_all('script')[1].contents[0]
 
-        # Step 1: remove all spaces, new lines and tabs
-        script = (re.sub('[\s+;]', '', script))
+            # Step 1: remove all spaces, new lines and tabs
+            script = (re.sub('[\s+;]', '', script))
 
-        # Step 2: convert string to dictionary. Creates a key as "digitalData"
-        js_dict = script.split("=")[1]
-        js_dict = re.sub(r"\bwindow(.*?),\b", '"",', js_dict)
-        my_property_dict = demjson.decode(js_dict)[0]['classified']
+            # Step 2: convert string to dictionary. Creates a key as "digitalData"
+            js_dict = script.split("=")[1]
+            js_dict = re.sub(r"\bwindow(.*?),\b", '"",', js_dict)
+            my_property_dict = demjson.decode(js_dict)[0]['classified']
 
-        print('Information retrieved')
+            print('[i] Information retrieved from ' + annonce_url)
+            return self.get_property_detail(my_property_dict)
+        except Exception as e:
+            print(f'[!] Information not retrieved from {annonce_url}\nError message : {e}')
+            return None
 
-        return self.get_property_detail(my_property_dict)
 
-    def get_property_detail(self, dictionary) -> PropertyDetail:
+    def get_property_detail(self, dictionary: Dict) -> PropertyDetail:
         '''
         This function will create a PropertyDetail instance from the
         dico scrapped in the immoweb javascript
@@ -103,7 +112,7 @@ class ImmowebAPI():
         terrace = None  # ...
         terrace_area = None  # ...
         garden = None  # ...
-        if len(dictionary['outdoor']['garden']['surface']) >= 0:
+        if len(dictionary['outdoor']['garden']['surface']) > 0:
             garden_area = dictionary['outdoor']['garden']['surface']
         else:
             garden_area = None
@@ -112,7 +121,7 @@ class ImmowebAPI():
         else:
             total_land_area = None
         nr_of_facades = None  # ...
-        if len(dictionary['wellnessEquipment']['hasSwimmingPool']) >= 0:
+        if len(dictionary['wellnessEquipment']['hasSwimmingPool']) > 0:
             swimming_pool = dictionary['wellnessEquipment']['hasSwimmingPool']
         else:
             swimming_pool = None
