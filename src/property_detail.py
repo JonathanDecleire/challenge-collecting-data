@@ -7,7 +7,7 @@ class PropertyDetail():
                  type_of_sale: str,
                  nr_of_rooms: int,
                  area: float,
-                 equipped_kitchen: bool,
+                 equiped_kitchen: bool,
                  furnished: bool,
                  open_fire: bool,
                  terrace: bool,
@@ -25,7 +25,7 @@ class PropertyDetail():
         # self.type_of_sale = on hold
         self.nr_of_rooms = nr_of_rooms
         self.area = area
-        self.equipped_kitchen = equipped_kitchen
+        self.equiped_kitchen = equiped_kitchen
         self.furnished = furnished
         self.open_fire = open_fire
         self.terrace = terrace

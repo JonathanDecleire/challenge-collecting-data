@@ -1,10 +1,17 @@
-from src.immoweb_api import ImmowebAPI
+from src.data_collector import DataCollector
 
 if __name__ == "__main__":
-    my_immoweb_api = ImmowebAPI()
-    # Get list on 1st Page
-    list_url = my_immoweb_api.get_properties_list()
-    print(len(list_url))
-    # Get list on 54th Page
-    list_url54 = my_immoweb_api.get_properties_list(54)
-    print(len(list_url54))
+    # Start the Data Collection
+    my_data_collector = DataCollector(2)
+
+    print('[i] Start DataColector')
+
+    my_data_collector.start()
+
+    print('[i] End DataColector')
+
+    '''
+    # DEBUG MODE - TO TEST A SPECIFIC URL
+    annonce_url = 'https://www.immoweb.be/fr/annonce/studio/a-vendre/uccle/1180/8997289?searchId=5fb59dc213eae'
+    my_immoweb_api.get_properties_detail(annonce_url)
+    '''
