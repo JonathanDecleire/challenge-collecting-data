@@ -1,3 +1,4 @@
+import re
 from threading import Thread, RLock
 from time import sleep
 
@@ -6,7 +7,7 @@ from src.property_detail import PropertyDetail
 
 
 class DataCollector():
-    def __init__(self, page_limit: int = None, max_threads: int=5):
+    def __init__(self, page_limit: int = None, max_threads: int = 5):
         self.page_limit = page_limit
         self.max_threads = max_threads
 
@@ -22,6 +23,9 @@ class DataCollector():
         while len(list_url) > 0:
             # Scrap each url retrieved
             for annonce_url in list_url:
+                # Get annonce ID TODO - Double entry management
+                annonce_id = re.findall('/(\d+)',annonce_url)[-1]
+                print(f'[i] ***{annonce_id}***')
                 # Max Threads limitation - wait
                 while len(active_threads) >= self.max_threads:
                     for x in active_threads:
@@ -31,7 +35,7 @@ class DataCollector():
                 collector_thread = DataCollectorThread(annonce_url)
                 collector_thread.start()
                 active_threads.append(collector_thread)
-                sleep(1)  # To sequence the multithreading
+                sleep(2)  # To sequence the multithreading
 
             # Load next page
             if self.page_limit is None or page_num < self.page_limit:

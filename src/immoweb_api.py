@@ -51,15 +51,17 @@ class ImmowebAPI():
             soup = BeautifulSoup(driver.page_source, 'lxml')
             driver.close()
 
-            script = soup.find_all('script')[1].contents[0]
+            # script = soup.find_all('script')[1].contents[0]
+            script = soup.find_all('div', class_='classified')[0].find('script').next
+
 
             # Step 1: remove all spaces, new lines and tabs
             script = (re.sub('[\s+;]', '', script))
 
             # Step 2: convert string to dictionary. Creates a key as "digitalData"
-            js_dict = script.split("=")[1]
+            js_dict = script.replace('window.classified=','')
             js_dict = re.sub(r"\bwindow(.*?),\b", '"",', js_dict)
-            my_property_dict = demjson.decode(js_dict)[0]['classified']
+            my_property_dict = demjson.decode(js_dict)
 
             print('[i] Information retrieved from ' + annonce_url)
             return self.get_property_detail(my_property_dict)
@@ -78,57 +80,24 @@ class ImmowebAPI():
                   all detail of the property
         '''
         # Extract dictionary infos
-        if len(dictionary['zip']) > 0:
-            locality = dictionary['zip']
-        else:
-            locality = None
-        if len(dictionary['type']) > 0:
-            type_of_property = dictionary['type']
-        else:
-            type_of_property = None
-        if len(dictionary['subtype']) > 0:
-            subtype_of_property = dictionary['subtype']
-        else:
-            subtype_of_property = None
-        if len(dictionary['price']) > 0:
-            price = dictionary['price']
-        else:
-            price = None
-        if len(dictionary['transactionType']) > 0:
-            type_of_sale = dictionary['transactionType']
-        else:
-            type_of_sale = None
-        if len(dictionary['bedroom']['count']) > 0:
-            nr_of_rooms = dictionary['bedroom']['count']
-        else:
-            nr_of_rooms = None
-        area = None  # ...
-        if len(dictionary['kitchen']['type']) > 0:
-            equiped_kitchen = dictionary['kitchen']['type']
-        else:
-            equiped_kitchen = None
-        furnished = None  # ...
-        open_fire = None  # ...
-        if dictionary['outdoor']['exists'] == 'true' :
-            terrace = True
-            terrace_area = None #...
-        else:
-            terrace = False
-        garden = None  # ...
-        if len(dictionary['outdoor']['garden']['surface']) > 0:
-            garden_area = dictionary['outdoor']['garden']['surface']
-        else:
-            garden_area = None
-        if len(dictionary['land']['surface']) >= 0:
-            total_land_area = dictionary['land']['surface']
-        else:
-            total_land_area = None
-        nr_of_facades = None  # ...
-        if len(dictionary['wellnessEquipment']['hasSwimmingPool']) > 0:
-            swimming_pool = dictionary['wellnessEquipment']['hasSwimmingPool']
-        else:
-            swimming_pool = None
-        building_condition = None  #
+        locality = dictionary['property']['location']['postalCode']
+        type_of_property = dictionary['property']['type']
+        subtype_of_property = dictionary['property']['subtype']
+        price = dictionary['transaction']['sale']['price']
+        type_of_sale = dictionary['transaction']['type']
+        nr_of_rooms = dictionary['property']['bedroomCount']
+        area = dictionary['property']['netHabitableSurface']
+        equiped_kitchen = dictionary['property']['kitchen']['type']
+        furnished = dictionary['transaction']['sale']['isFurnished']
+        open_fire = dictionary['property']['fireplaceExists']
+        terrace = dictionary['property']['hasTerrace']
+        terrace_area = dictionary['property']['terraceSurface']
+        garden = dictionary['property']['hasGarden']
+        garden_area = dictionary['property']['gardenSurface']
+        total_land_area = dictionary['property']['land']['surface']
+        nr_of_facades = dictionary['property']['building']['facadeCount']
+        swimming_pool = dictionary['property']['hasSwimmingPool']
+        building_condition = dictionary['property']['building']['condition']
 
         # Create the return object instance
         my_property_detail = PropertyDetail(locality, type_of_property,
