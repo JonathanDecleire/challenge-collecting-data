@@ -8,7 +8,7 @@ class Database():
     Class ...
     '''
     def __init__(self, database_file: str):
-        pass
+        self.dfs = pandas.read_excel(database_file, sheet_name='Sheet1')
 
     def add_property_detail(self, property_detail: PropertyDetail):
         pass

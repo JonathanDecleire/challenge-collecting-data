@@ -9,6 +9,7 @@ if __name__ == "__main__":
                         350000, 'type_of_sale', 3, 100, True, False, False, False,
                         None, True, 300, 350, 4, False, 'HAS_NEW')
     list_pd.append(pd)
+    print(((((((((())))))))))
     pd = PropertyDetail('Waremme', 'type_of_property', 'subtype_of_property',
                         350000, 'type_of_sale', 3, 100, True, False, False, False,
                         None, True, 300, 350, 4, False, 'HAS_NEW')
@@ -18,7 +19,6 @@ if __name__ == "__main__":
     pd = PropertyDetail('Liege', 'type_of_property', 'subtype_of_property',
                         350000, 'type_of_sale', 3, 100, True, False, False, False,
                         None, True, 300, 350, 4, False, 'HAS_NEW')
-    
 
     df = df.append(pd.__dict__(), ignore_index=True)
 
@@ -26,6 +26,9 @@ if __name__ == "__main__":
 
 
     print(df)
+
+    dfs = pandas.read_excel('import_to_excel.xlsx', sheet_name='Sheet1')
+    print(dfs)
     '''
     # Start the Data Collection
     my_data_collector = DataCollector(2)
