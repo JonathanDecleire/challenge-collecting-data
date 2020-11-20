@@ -22,14 +22,12 @@ class Database():
         if self.data_frame.empty:
             data = property_detail.to_dict()
             self.data_frame = pandas.DataFrame([data], columns=data.keys())
-            self.data_frame.set_index('id')
         else:
             self.data_frame = self.data_frame.append(property_detail.to_dict(),
                                                      ignore_index=True)
-        print(self.data_frame)
 
     def save(self):
-        self.data_frame.to_excel(self.database_file)
+        self.data_frame.to_excel(self.database_file, index=False)
 
     def id_exists(self, id: int) -> bool:
         if self.data_frame.empty:
