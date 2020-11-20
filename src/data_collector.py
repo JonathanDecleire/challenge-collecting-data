@@ -10,7 +10,7 @@ from src.database import Database
 class DataCollector():
     def __init__(self, page_limit: int = None,
                  max_threads: int = 5,
-                 database_name: str = 'immoweb_scrapped.xlsx'):
+                 database_name: str = 'immoweb_scrapped.csv'):
         self.page_limit = page_limit
         self.max_threads = max_threads
         self.database = Database(database_name)
@@ -26,6 +26,7 @@ class DataCollector():
         # and page limit not reached
         active_threads = []
         while len(list_url) > 0:
+            print(f'[i] urls found : {len(list_url)}')
             # Scrap each url retrieved
             for annonce_url in list_url:
                 # Get annonce ID TODO - Double entry management
@@ -41,7 +42,7 @@ class DataCollector():
                     collector_thread = DataCollectorThread(annonce_url, self.database)
                     collector_thread.start()
                     active_threads.append(collector_thread)
-                    sleep(1)  # To sequence the multithreading
+                    sleep(2)  # To sequence the multithreading
                 else:
                     print(f'******** {annonce_id} - already exist')
 

@@ -36,7 +36,7 @@ class ImmowebAPI():
             # The page scrapping encoured a problem
             # Problem of URL or page index over maximum
             pass
-        driver.close()
+        driver.quit()
         return properties_list
 
     def get_properties_detail(self, annonce_url: str) -> PropertyDetail:
@@ -54,11 +54,10 @@ class ImmowebAPI():
 
             driver.get(annonce_url)
             soup = BeautifulSoup(driver.page_source, 'lxml')
-            driver.close()
+            driver.quit()
 
             # script = soup.find_all('script')[1].contents[0]
             script = soup.find_all('div', class_='classified')[0].find('script').next
-
 
             # Step 1: remove all spaces, new lines and tabs
             script = (re.sub('[\s+;]', '', script))

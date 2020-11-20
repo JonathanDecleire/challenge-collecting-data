@@ -13,8 +13,7 @@ class Database():
     def __init__(self, database_file: str):
         self.database_file = database_file
         if os.path.isfile(database_file):
-            self.data_frame = pandas.read_excel(database_file,
-                                                sheet_name='Sheet1')
+            self.data_frame = pandas.read_csv(database_file)
         else:
             self.data_frame = pandas.DataFrame()
 
@@ -27,7 +26,7 @@ class Database():
                                                      ignore_index=True)
 
     def save(self):
-        self.data_frame.to_excel(self.database_file, index=False)
+        self.data_frame.to_csv(self.database_file, index=False)
 
     def id_exists(self, id: int) -> bool:
         if self.data_frame.empty:
