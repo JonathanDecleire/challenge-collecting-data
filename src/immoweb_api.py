@@ -4,6 +4,7 @@ import demjson
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 from typing import Dict, List
 
 from src.property_detail import PropertyDetail
@@ -23,7 +24,9 @@ class ImmowebAPI():
         :return : a list of url founded in class "card__title-link"
         '''
         properties_list = []
-        driver = webdriver.Firefox()
+        options = Options()
+        options.headless = True
+        driver = webdriver.Firefox(options=options)
         try:
             driver.get(self.base_search_url.format(page_num))
             soup = BeautifulSoup(driver.page_source, 'lxml')
@@ -44,9 +47,11 @@ class ImmowebAPI():
         :param annonce_url : url to call
         :return : an object that represent the detail
         '''
-        print('[i] get info from ' + annonce_url)
         try:
-            driver = webdriver.Firefox()
+            options = Options()
+            options.headless = True
+            driver = webdriver.Firefox(options=options)
+
             driver.get(annonce_url)
             soup = BeautifulSoup(driver.page_source, 'lxml')
             driver.close()
@@ -63,7 +68,6 @@ class ImmowebAPI():
             js_dict = re.sub(r"\bwindow(.*?),\b", '"",', js_dict)
             my_property_dict = demjson.decode(js_dict)
 
-            print('[i] Information retrieved from ' + annonce_url)
             return self.get_property_detail(my_property_dict)
         except Exception as e:
             print(f'[!] Information not retrieved from {annonce_url}')

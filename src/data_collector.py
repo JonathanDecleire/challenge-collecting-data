@@ -1,5 +1,5 @@
 import re
-from threading import Thread, RLock
+from threading import Thread
 from time import sleep
 
 from src.immoweb_api import ImmowebAPI
@@ -8,7 +8,9 @@ from src.database import Database
 
 
 class DataCollector():
-    def __init__(self, page_limit: int = None, max_threads: int = 5, database_name: str = 'immoweb_scrapped.xlsx'):
+    def __init__(self, page_limit: int = None,
+                 max_threads: int = 5,
+                 database_name: str = 'immoweb_scrapped.xlsx'):
         self.page_limit = page_limit
         self.max_threads = max_threads
         self.database = Database(database_name)
@@ -16,8 +18,9 @@ class DataCollector():
     def start(self):
         my_immoweb_api = ImmowebAPI()
         # Load first page
-        list_url = my_immoweb_api.get_properties_list()
         page_num = 1
+        print(f'[i] Load result page {page_num}')
+        list_url = my_immoweb_api.get_properties_list()
 
         # Loop while found links to scrap
         # and page limit not reached
@@ -45,6 +48,7 @@ class DataCollector():
             # Load next page
             if self.page_limit is None or page_num < self.page_limit:
                 page_num += 1
+                print(f'[i] Load result page {page_num}')
                 list_url = my_immoweb_api.get_properties_list(page_num)
             else:
                 break  # Kill the loop if limit reached
