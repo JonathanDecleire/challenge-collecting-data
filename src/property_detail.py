@@ -25,7 +25,7 @@ class PropertyDetail():
         self.type_of_property = type_of_property  # ["house", "apartement", "other"]
         self.subtype_of_property = subtype_of_property  # ["bungalow", "chalet", "mansion", "castle", "cottage", "apartment block", "town house", "farm house", "other"]  
         self.price = price
-        # self.type_of_sale = on hold
+        self.type_of_sale = type_of_sale
         self.nr_of_rooms = nr_of_rooms
         self.area = area
         self.equiped_kitchen = equiped_kitchen
