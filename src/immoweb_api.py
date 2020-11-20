@@ -67,7 +67,7 @@ class ImmowebAPI():
             return self.get_property_detail(my_property_dict)
         except Exception as e:
             print(f'[!] Information not retrieved from {annonce_url}')
-            print(f'\nError : {type(e)}\nError message : {e}')
+            print(f'Error : {type(e)}\nError message : {e}')
             return None
 
     def get_property_detail(self, dictionary: Dict) -> PropertyDetail:
@@ -88,17 +88,30 @@ class ImmowebAPI():
         type_of_sale = dictionary['transaction']['type']
         nr_of_rooms = dictionary['property']['bedroomCount']
         area = dictionary['property']['netHabitableSurface']
-        equiped_kitchen = dictionary['property']['kitchen']['type']
-        furnished = dictionary['transaction']['sale']['isFurnished']
+        if not dictionary['property']['kitchen'] is None:
+            equiped_kitchen = dictionary['property']['kitchen']['type']
+        else:
+            equiped_kitchen = None
+        if not dictionary['transaction']['sale'] is None:
+            furnished = dictionary['transaction']['sale']['isFurnished']
+        else:
+            furnished = None
         open_fire = dictionary['property']['fireplaceExists']
         terrace = dictionary['property']['hasTerrace']
         terrace_area = dictionary['property']['terraceSurface']
         garden = dictionary['property']['hasGarden']
         garden_area = dictionary['property']['gardenSurface']
-        total_land_area = dictionary['property']['land']['surface']
-        nr_of_facades = dictionary['property']['building']['facadeCount']
+        if not dictionary['property']['land'] is None:
+            total_land_area = dictionary['property']['land']['surface']
+        else:
+            total_land_area = None
+        if not dictionary['property']['building'] is None:
+            nr_of_facades = dictionary['property']['building']['facadeCount']
+            building_condition = dictionary['property']['building']['condition']
+        else:
+            nr_of_facades = None
+            building_condition = None
         swimming_pool = dictionary['property']['hasSwimmingPool']
-        building_condition = dictionary['property']['building']['condition']
 
         # Create the return object instance
         my_property_detail = PropertyDetail(id,

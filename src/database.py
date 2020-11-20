@@ -22,6 +22,7 @@ class Database():
         if self.data_frame.empty:
             data = property_detail.to_dict()
             self.data_frame = pandas.DataFrame([data], columns=data.keys())
+            self.data_frame.set_index('id')
         else:
             self.data_frame = self.data_frame.append(property_detail.to_dict(),
                                                      ignore_index=True)
