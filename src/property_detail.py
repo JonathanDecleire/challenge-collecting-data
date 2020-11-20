@@ -1,3 +1,6 @@
+from typing import Dict
+
+
 class PropertyDetail():
     def __init__(self,
                  locality: str,
@@ -36,3 +39,7 @@ class PropertyDetail():
         self.nr_of_facades = nr_of_facades
         self.swimming_pool = swimming_pool
         self.building_condition = building_condition  # ["new", "as new", "just renovated", "good", "to renovate", "to restore", "other"]
+
+    def __dict__(self) -> Dict:
+        return {'locality': self.locality,
+                'area': self.area }
