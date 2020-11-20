@@ -18,6 +18,7 @@ class Database():
             self.data_frame = pandas.DataFrame()
 
     def add_property_detail(self, property_detail: PropertyDetail):
+        print(f'[i] Add {property_detail.id}')
         if self.data_frame.empty:
             data = property_detail.to_dict()
             self.data_frame = pandas.DataFrame([data], columns=data.keys())

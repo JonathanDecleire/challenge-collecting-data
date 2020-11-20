@@ -42,7 +42,7 @@ class DataCollector():
                     collector_thread = DataCollectorThread(annonce_url, self.database)
                     collector_thread.start()
                     active_threads.append(collector_thread)
-                    sleep(2)  # To sequence the multithreading
+                    sleep(3)  # To sequence the multithreading
                 else:
                     print(f'******** {annonce_id} - already exist')
 
