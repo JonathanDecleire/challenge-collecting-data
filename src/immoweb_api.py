@@ -80,6 +80,7 @@ class ImmowebAPI():
                   all detail of the property
         '''
         # Extract dictionary infos
+        id = dictionary['id']
         locality = dictionary['property']['location']['postalCode']
         type_of_property = dictionary['property']['type']
         subtype_of_property = dictionary['property']['subtype']
@@ -100,7 +101,8 @@ class ImmowebAPI():
         building_condition = dictionary['property']['building']['condition']
 
         # Create the return object instance
-        my_property_detail = PropertyDetail(locality, type_of_property,
+        my_property_detail = PropertyDetail(id,
+                                            locality, type_of_property,
                                             subtype_of_property, price,
                                             type_of_sale, nr_of_rooms,
                                             area, equiped_kitchen,

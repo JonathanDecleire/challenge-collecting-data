@@ -3,6 +3,7 @@ from typing import Dict
 
 class PropertyDetail():
     def __init__(self,
+                 id: int,
                  locality: str,
                  type_of_property: str,
                  subtype_of_property: str,
@@ -21,9 +22,10 @@ class PropertyDetail():
                  nr_of_facades: int,
                  swimming_pool: bool,
                  building_condition: str):
-        self.locality = locality  # from bpost list
-        self.type_of_property = type_of_property  # ["house", "apartement", "other"]
-        self.subtype_of_property = subtype_of_property  # ["bungalow", "chalet", "mansion", "castle", "cottage", "apartment block", "town house", "farm house", "other"]  
+        self.id = id
+        self.locality = locality
+        self.type_of_property = type_of_property
+        self.subtype_of_property = subtype_of_property
         self.price = price
         self.type_of_sale = type_of_sale
         self.nr_of_rooms = nr_of_rooms
@@ -32,14 +34,33 @@ class PropertyDetail():
         self.furnished = furnished
         self.open_fire = open_fire
         self.terrace = terrace
-        self.terrace_area = terrace_area  # if terrace == yes
+        self.terrace_area = terrace_area
         self.garden = garden
-        self.garden_area = garden_area  # if garden == yes
+        self.garden_area = garden_area
         self.total_land_area = total_land_area
         self.nr_of_facades = nr_of_facades
         self.swimming_pool = swimming_pool
-        self.building_condition = building_condition  # ["new", "as new", "just renovated", "good", "to renovate", "to restore", "other"]
+        self.building_condition = building_condition
 
-    def __dict__(self) -> Dict:
-        return {'locality': self.locality,
-                'area': self.area }
+    def to_dict(self) -> Dict:
+        return {
+                'id': self.id,
+                'locality': self.locality,
+                'type_of_property': self.type_of_property,
+                'subtype_of_property': self.subtype_of_property,
+                'price': self.price,
+                'type_of_sale': self.type_of_sale,
+                'nr_of_rooms': self.nr_of_rooms,
+                'area': self.area,
+                'equiped_kitchen': self.equiped_kitchen,
+                'furnished': self.furnished,
+                'open_fire': self.open_fire,
+                'terrace': self.terrace,
+                'terrace_area': self.terrace_area,
+                'garden': self.garden,
+                'garden_area': self.garden_area,
+                'total_land_area': self.total_land_area,
+                'nr_of_facades': self.nr_of_facades,
+                'swimming_pool': self.swimming_pool,
+                'building_condition': self.building_condition,
+               }
