@@ -43,16 +43,16 @@ class DataCollector():
                     collector_thread.start()
                     active_threads.append(collector_thread)
                     sleep(3)  # To sequence the multithreading
-                else:
-                    print(f'******** {annonce_id} - already exist')
+                # else:
+                #    print(f'******** {annonce_id} - already exist')
 
             # Load next page
             if self.page_limit is None or page_num < self.page_limit:
                 page_num += 1
                 print(f'[i] Load result page {page_num}')
                 list_url = my_immoweb_api.get_properties_list(page_num)
-            # else:
-            #    break  # Kill the loop if limit reached
+            else:
+                break  # Kill the loop if limit reached
 
         # Wait the end of all active Threads
         for x in active_threads:
