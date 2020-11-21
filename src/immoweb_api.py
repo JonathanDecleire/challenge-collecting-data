@@ -11,7 +11,14 @@ from src.property_detail import PropertyDetail
 
 
 class ImmowebAPI():
+    '''
+    This class allows to scrap the website www.immoweb.be
+    By default, the 'base_search_url' includes all house and appartment
+    '''
     def __init__(self):
+        '''
+        Default constructor
+        '''
         self.base_search_url = 'https://www.immoweb.be/fr/recherche/maison-et-appartement/a-vendre?countries=BE&page={}&orderBy=relevance'
         pass
 
@@ -20,22 +27,30 @@ class ImmowebAPI():
         This function will return the list of properties url found
         on a immoweb search page
 
-        :param page_num : int that represent the page number to inspect
-        :return : a list of url founded in class "card__title-link"
+        :param page_num : int that representq the page number to inspect
+                          If not set, it will be set to 1
+        :return         : list of url founded in class "card__title-link"
+                          It will be empty if the page is not accessible
+                          or if there is no annonce link on the page
         '''
         properties_list = []
+        # Instanciation of a Headless Firefox driver
         options = Options()
         options.headless = True
         driver = webdriver.Firefox(options=options)
+
         try:
+            # Load the search url with the specified page number
             driver.get(self.base_search_url.format(page_num))
             soup = BeautifulSoup(driver.page_source, 'lxml')
+            # Collect the links to the annonce links
             for a in soup.find_all('a', attrs={"class": "card__title-link"}):
                 properties_list.append(a['href'])
         except Exception:
             # The page scrapping encoured a problem
             # Problem of URL or page index over maximum
             pass
+
         driver.quit()
         return properties_list
 
@@ -44,31 +59,36 @@ class ImmowebAPI():
         This function will return the detail of a property found in
         an 'immoweb annonce' page
 
-        :param annonce_url : url to call
-        :return : an object that represent the detail
+        :param annonce_url : url of the annonce
+        :return            : PropertyDetail that represents the detail
+                             None if error during the scrap process
         '''
         try:
+            # Instanciation of a Headless Firefox driver
             options = Options()
             options.headless = True
             driver = webdriver.Firefox(options=options)
-
+            # Load the specified annonce
             driver.get(annonce_url)
             soup = BeautifulSoup(driver.page_source, 'lxml')
             driver.quit()
 
-            # script = soup.find_all('script')[1].contents[0]
+            # Extract the javascript containing the property detail infos
             script = soup.find_all('div', class_='classified')[0].find('script').next
 
+            # Convert the javascript to a dictionnary
             # Step 1: remove all spaces, new lines and tabs
             script = (re.sub('[\s+;]', '', script))
-
-            # Step 2: convert string to dictionary. Creates a key as "digitalData"
+            # Step 2: remove not desired string
             js_dict = script.replace('window.classified=','')
             js_dict = re.sub(r"\bwindow(.*?),\b", '"",', js_dict)
+            # Step 3: convert the clean string to dict
             my_property_dict = demjson.decode(js_dict)
 
+            # Create and return the PropertyDetail 
             return self.get_property_detail(my_property_dict)
         except Exception as e:
+            # Uncepted exception -> add info in the terminal
             print(f'[!] Information not retrieved from {annonce_url}')
             print(f'Error : {type(e)}\nError message : {e}')
             return None
@@ -79,10 +99,10 @@ class ImmowebAPI():
         dico scrapped in the immoweb javascript
 
         :param dictionary: the scrapped dictionnary on immoweb
-        :return : An instance of PropertyDetail that will contain
-                  all detail of the property
+        :return          : An instance of PropertyDetail that will contain
+                           all detail of the property
         '''
-        # Extract dictionary infos
+        # Extracts dictionary infos
         id = dictionary['id']
         locality = dictionary['property']['location']['postalCode']
         type_of_property = dictionary['property']['type']

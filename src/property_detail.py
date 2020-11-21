@@ -2,6 +2,9 @@ from typing import Dict
 
 
 class PropertyDetail():
+    '''
+    This class represents a real estate property details.
+    '''
     def __init__(self,
                  id: int,
                  locality: str,
@@ -22,6 +25,10 @@ class PropertyDetail():
                  nr_of_facades: int,
                  swimming_pool: bool,
                  building_condition: str):
+        '''
+        Default constructor
+        '''
+
         self.id = id
         self.locality = locality
         self.type_of_property = type_of_property
@@ -43,6 +50,12 @@ class PropertyDetail():
         self.building_condition = building_condition
 
     def to_dict(self) -> Dict:
+        '''
+        This function will return a dictionnary containing each couple
+        variable as key : value of the variable
+
+        :return : a dict that represent the PropertyDetail as key - value
+        '''
         return {
                 'id': self.id,
                 'locality': self.locality,
