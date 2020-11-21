@@ -1,5 +1,5 @@
 import re
-from threading import Thread
+from threading import Thread, RLock
 from time import sleep
 
 from src.immoweb_api import ImmowebAPI
@@ -29,7 +29,7 @@ class DataCollector():
             print(f'[i] urls found : {len(list_url)}')
             # Scrap each url retrieved
             for annonce_url in list_url:
-                # Get annonce ID TODO - Double entry management
+                # Get annonce ID from url
                 annonce_id = int(re.findall('/(\d+)',annonce_url)[-1])
                 # Load a search only if id not already loaded in the database
                 if not self.database.id_exists(annonce_id):
@@ -62,6 +62,9 @@ class DataCollector():
         self.database.save()
 
 
+lock_database = RLock()
+
+
 class DataCollectorThread(Thread):
     def __init__(self, annonce_url: str, database: Database):
         Thread.__init__(self)
@@ -72,4 +75,5 @@ class DataCollectorThread(Thread):
     def run(self):
         my_detail = self.immoweb_api.get_properties_detail(self.annonce_url)
         if isinstance(my_detail, PropertyDetail):
-            self.database.add_property_detail(my_detail)
+            with lock_database:
+                self.database.add_property_detail(my_detail)
