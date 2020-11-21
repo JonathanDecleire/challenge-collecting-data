@@ -6,6 +6,6 @@ if __name__ == "__main__":
     my_data_collector = DataCollector()
 
     # Start the Data Collection
-    print(f'[i] Start DataColector{datetime.now()}')
+    print(f"[i] Start DataColector{datetime.now()}")
     my_data_collector.start()
-    print(f'[i] Stop DataColector{datetime.now()}')
+    print(f"[i] Stop DataColector{datetime.now()}")
