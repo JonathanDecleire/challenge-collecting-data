@@ -90,10 +90,10 @@ python main.py
 ```
 ## Data collected
 
-[See the CSV](immoweb_scrapped.csv)
+[See immoweb_scrapped.csv](immoweb_scrapped.csv)
 
 ## Requirements
 
-[See the requirements.txt](requirements.txt)
+[See requirements.txt](requirements.txt)
 
 
