@@ -23,7 +23,7 @@ We are collecting this data for a fictitious real estate company who wants to cr
 ## How
 We have to scrape any belgian real estate agency website for information. 
 
-We chose to scrape the data from the Immoweb website : https://www.immoweb.be/fr/recherche/maison-et-appartement/a-vendre?countries=BE&page={}&orderBy=relevance
+We chose to scrape the data from the [Immoweb website](https://www.immoweb.be/fr/recherche/maison-et-appartement/a-vendre?countries=BE&page={1}&orderBy=relevance)
 
 The dataset(.csv) has to include the below columns:
 
@@ -70,19 +70,6 @@ and store it in the .csv file.
 
 ![Sequence diagram](img/sequence_diagram.png)
 
-
-## Possible improvements
-
-    [] Improving the scraping time
-    [] Check for other/better ways to store information in a database
-    [] Change repetitive strings to code (e.g. Apartment Group -> AG)
-    [] Scrape the 23 properties not able to retrieve from website due to a decoding error of JSON dictionary
-
-
-## When
-
-3 days to complete (18/11/2020 -- 22/11/2020)
-
 ## Run
 To run this application, launch
 ```python
@@ -96,4 +83,15 @@ python main.py
 
 [See requirements.txt](requirements.txt)
 
+## Possible improvements
+
+    [] Improving the scraping time
+    [] Check for other/better ways to store information in a database
+    [] Change repetitive strings to code (e.g. Apartment Group -> AG)
+    [] Scrape the 23 properties not able to retrieve from website due to a decoding error of JSON dictionary
+
+
+## When
+
+3 days to complete (18/11/2020 -- 22/11/2020)
 
