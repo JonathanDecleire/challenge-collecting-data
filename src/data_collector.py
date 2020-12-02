@@ -17,7 +17,7 @@ class DataCollector:
         self,
         page_limit: int = None,
         max_threads: int = 5,
-        database_name: str = "immoweb_scrapped.csv",
+        database_name: str = "immoweb_scrapped.csv"
     ):
         """
         Default constructor
@@ -62,7 +62,8 @@ class DataCollector:
                             if not x.is_alive():
                                 active_threads.remove(x)
                     # Launch a new detail scrapping thread
-                    collector_thread = DataCollectorThread(annonce_url, self.database)
+                    collector_thread = DataCollectorThread(annonce_url,
+                                                           self.database)
                     collector_thread.start()
                     active_threads.append(collector_thread)
                     # To sequence the multithreading

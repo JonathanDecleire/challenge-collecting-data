@@ -1,0 +1,10 @@
+bs4
+demjson
+os
+pandas
+re
+selenium
+selenium.webdriver.firefox.options
+threading
+time
+typing
