@@ -2,6 +2,13 @@
 
 ![Logo](img/logo.png)
 
+## Team members - Contributors
+
+* [Lise Amen](https://github.com/lise-amen)
+* [Tina Folkers](https://github.com/tinafolkers)
+* [Jérôme Coumont](https://github.com/jcoumont)
+* [Jonathan Decleire](https://github.com/JonathanDecleire)
+
 ## Purpose
 Create a program in python using web scraping and python libraries to create a dataset of Belgian real estate listings.
 
@@ -76,9 +83,17 @@ and store it in the .csv file.
 
 3 days to complete (18/11/2020 -- 22/11/2020)
 
-## Team members - Contributors
+## Run
+To run this application, launch
+```python
+python main.py
+```
+## Data collected
 
-* [Lise Amen](https://github.com/lise-amen)
-* [Tina Folkers](https://github.com/tinafolkers)
-* [Jérôme Coumont](https://github.com/jcoumont)
-* [Jonathan Decleire](https://github.com/JonathanDecleire)
+[See the CSV](immoweb_scrapped.csv)
+
+## Requirements
+
+[See the requirements.txt](requirements.txt)
+
+
