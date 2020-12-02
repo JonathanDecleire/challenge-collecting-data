@@ -73,7 +73,7 @@ and store it in the .csv file.
 
 ## Team members - Contributors
 
-[Lise Amen](https://github.com/lise-amen)
-[Tina Folkers](https://github.com/tinafolkers)
-[Jérôme Coumont](https://github.com/jcoumont)
-[Jonathan Decleire](https://github.com/JonathanDecleire)
+* [Lise Amen](https://github.com/lise-amen)
+* [Tina Folkers](https://github.com/tinafolkers)
+* [Jérôme Coumont](https://github.com/jcoumont)
+* [Jonathan Decleire](https://github.com/JonathanDecleire)
