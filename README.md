@@ -82,6 +82,7 @@ python main.py
 ## Requirements
 
 [See requirements.txt](requirements.txt)
+
 As we used Selenium, please ensure that your machine is setup correctly. If not, please [download this](https://www.selenium.dev/downloads/)
 
 ## Possible improvements
