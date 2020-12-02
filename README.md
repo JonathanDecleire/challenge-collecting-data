@@ -15,7 +15,9 @@ We are collecting this data for a fictitious real estate company who wants to cr
 
 ## How
 We have to scrape any belgian real estate agency website for information. 
+
 We chose to scrape the data from the Immoweb website : https://www.immoweb.be/fr/recherche/maison-et-appartement/a-vendre?countries=BE&page={}&orderBy=relevance
+
 The dataset(.csv) has to include the below columns:
 
     Locality
@@ -45,7 +47,9 @@ The dataset(.csv) has to include the below columns:
 
 ## Class diagram
 The class diagram represents the different classes that were created to be able to execute the program efficiently.
+
 Within each class the variables and methods created and used are listed.
+
 It also displays the connections between the different classes to allow their seemless interaction.
 
 ![Class diagram](img/class_diagram.png)
@@ -53,6 +57,7 @@ It also displays the connections between the different classes to allow their se
 
 ## Sequence diagram
 The sequence diagram portrays the step by step process of the program. 
+
 It shows how each method/variable from the different classes interact with each other to collect the data from the website
 and store it in the .csv file.
 
